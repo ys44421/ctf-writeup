@@ -36,8 +36,9 @@ The program then revealed the flag: HTB{un0bfu5c4t3d_5tr1ng5}
 ---
 ##  Conclusion
 This challenge demonstrated how even simple tools like `strings` can solve beginner-level reversing tasks.  
-By carefully examining the binary output, I was able to identify the hardcoded password, use it to run the program, and finally retrieve the flag.  
+By carefully examining the binary output, I was able to identify the hardcoded password, use it to run the program, and finally retrieve the flag. 
 
+---
 ### Key takeaways:
 Always start with basic static analysis (`file`, `strings`) before moving to advanced tools.
 Many beginner reversing challenges hide secrets directly as plain text.
