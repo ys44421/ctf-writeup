@@ -40,7 +40,7 @@ By carefully examining the binary output, I was able to identify the hardcoded p
 
 ---
 ### Key takeaways:
-Always start with basic static analysis (`file`, `strings`) before moving to advanced tools.
-Many beginner reversing challenges hide secrets directly as plain text.
- Clear documentation of each step ensures reproducibility and better learning.
+-Always start with basic static analysis (`file`, `strings`) before moving to advanced tools.
+-Many beginner reversing challenges hide secrets directly as plain text.
+-Clear documentation of each step ensures reproducibility and better learning.
 
