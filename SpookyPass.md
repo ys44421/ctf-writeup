@@ -24,6 +24,10 @@ This created a folder rev_spookypass containing the binary file pass.
 ---
 ### 3. Inspect the binary with strings
 strings rev_spookypass/pass | less
+- I started with the strings command because it is one of the simplest and fastest ways to analyze a binary.
+It prints all human-readable text inside the file, which often includes error messages, prompts, or even hardcoded secrets.
+For a challenge marked Very Easy, it makes sense to try basic static analysis before moving to heavier tools like Ghidra or IDA.
+This approach saves time and often reveals enough information to solve beginner-level reversing challenges.
 - Inside the output, I noticed several library function names (e.g., `puts`, `strcmp`, `printf`) and text strings used by the program.  
 Among them, I found a **hardcoded password string**:
 This clearly looked like the required input for the program.
