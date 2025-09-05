@@ -30,7 +30,7 @@ For a challenge marked Very Easy, it makes sense to try basic static analysis be
 This approach saves time and often reveals enough information to solve beginner-level reversing challenges.
 - Inside the output, I noticed several library function names (e.g., `puts`, `strcmp`, `printf`) and text strings used by the program.  
 Among them, I found a **hardcoded password string**:
-This clearly looked like the required input for the program.
+This clearly looked like the required input for the program: s3cr3t_p455_f0r_gh05t5_4nd_gh0ul5
 
 ---
 ### 4. Run the binary and test the password
