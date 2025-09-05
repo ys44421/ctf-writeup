@@ -1,4 +1,4 @@
-#SpookyPass | HackTheBox (Reversing Challenge)
+# SpookyPass | HackTheBox (Reversing Challenge)
 
 **Category**: Reversing | **Difficulty**: Very Easy  
 **ZIP Password**: `hackthebox` | **Released**: 295 Days Ago
