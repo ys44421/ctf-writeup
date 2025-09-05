@@ -4,7 +4,7 @@
 **ZIP Password**: `hackthebox` | **Released**: 295 Days Ago
 
 ---
-## overview  
+## Overview  
 
 SpookyPass is a very easy reversing challenge from HackTheBox. The challenge provides a zipped binary file protected with a password. The goal is to analyze the binary, identify the required password, and retrieve the hidden flag.
 
@@ -24,7 +24,7 @@ This created a folder rev_spookypass containing the binary file pass.
 ---
 ### 3. Inspect the binary with strings
 strings rev_spookypass/pass | less
-Inside the output, I noticed several library function names (e.g., `puts`, `strcmp`, `printf`) and text strings used by the program.  
+- Inside the output, I noticed several library function names (e.g., `puts`, `strcmp`, `printf`) and text strings used by the program.  
 Among them, I found a **hardcoded password string**:
 This clearly looked like the required input for the program.
 
