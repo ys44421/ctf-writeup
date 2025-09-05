@@ -1,10 +1,10 @@
 #SpookyPass | HackTheBox (Reversing Challenge)
 
 **Category**: Reversing | **Difficulty**: Very Easy  
-**ZIP Password**: `hackthebox` | **Released**: ~295 Days Ago
+**ZIP Password**: `hackthebox` | **Released**: 295 Days Ago
 
 ---
-##overview  
+## overview  
 
 SpookyPass is a very easy reversing challenge from HackTheBox. The challenge provides a zipped binary file protected with a password. The goal is to analyze the binary, identify the required password, and retrieve the hidden flag.
 
@@ -38,7 +38,7 @@ The program then revealed the flag: HTB{un0bfu5c4t3d_5tr1ng5}
 This challenge demonstrated how even simple tools like `strings` can solve beginner-level reversing tasks.  
 By carefully examining the binary output, I was able to identify the hardcoded password, use it to run the program, and finally retrieve the flag.  
 
-###Key takeaways:
+### Key takeaways:
 Always start with basic static analysis (`file`, `strings`) before moving to advanced tools.
 Many beginner reversing challenges hide secrets directly as plain text.
  Clear documentation of each step ensures reproducibility and better learning.
