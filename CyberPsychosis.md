@@ -1,5 +1,13 @@
 # CyberPsychosis - writeup
 
+- **CTF name:** HackTheBox 
+- **Challenge name:** CyberPsychosis
+- **Challenge description:** A malicious Linux kernel module (`diamorphine.ko`) rootkit was provided. The module hides files/processes and contains a secret signal-based way to escalate to root. The task is to analyze the module, disarm it, and find the hidden flag.
+- **Challenge category:** Reverse engineering / Kernel rootkit
+- **Challenge difficulty:** Easy
+
+---
+
 ## Summary
 This challenge contained a malicious Linux kernel module called `diamorphine.ko`.  
 The module acted like a rootkit: it hid files/processes and provided a secret way to get root permissions.
