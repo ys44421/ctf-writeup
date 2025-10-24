@@ -43,9 +43,20 @@ I executed the checker to observe its behavior:
 
 ## Step 4: Finding the Encryption Method
 
-- I needed to understand how the program processes file.bin. I looked at the program's code:
-- Key Discovery: I found this line in the assembly code: xor al, 0xab
-- This means the program uses XOR encryption with the key 0xab.
+**Why I used objdump:** 
+- I needed to see the program's code to understand how it works.
+
+**What I looked for:**
+- Searched for the "decrypt" function because it handles the file
+- Looked for encryption operations like XOR
+
+**What I found:**
+- The instruction `xor al, 0xab` in the assembly code
+- This means each byte gets XORed with the value `0xab`
+
+**How I knew this was the key:**
+- XOR is a common simple encryption
+- `0xab` is the value used in the operation
 
 <img width="1070" height="213" alt="image" src="https://github.com/user-attachments/assets/779d03fc-0d80-41e8-8692-383c21795150" />
 
