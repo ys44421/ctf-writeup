@@ -134,7 +134,7 @@ The solution required understanding both the cryptographic elements and the posi
 
 ---
 
-# Step 9: Obtaining the Flag
+## Step 9: Obtaining the Flag
 
 After implementing and running the decryption algorithm, the program successfully revealed the flag:
 <img width="682" height="138" alt="image" src="https://github.com/user-attachments/assets/8f45fab9-1f4b-4598-b16e-5970367129d6" />
