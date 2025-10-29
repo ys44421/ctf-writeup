@@ -29,32 +29,32 @@
 ### 2. **String Extraction**
 
 ```bash
-strings rega_town | head -50
+strings rega_town | grep -E "Welcome|Enter|Correct|Maybe" | head -5
 ```
 - This reveals the program's messages and hints at validation mechanisms.
 
+<img width="1902" height="397" alt="image" src="https://github.com/user-attachments/assets/3cddc93b-7899-4908-b618-2e09e13d25ab" />
+
 ---
 
-### 3. **Pattern Discovery**
+### 3. Pattern Discovery
 
-Using binary analysis tools, I found that the program checks the input in multiple stages:
+Using radare2 for binary analysis, I discovered the program implements multi-stage validation:
 
-First, it verifies the basic flag structure:
-- The input must be exactly 33 characters long
-- It must start with "HTB{" and end with "}"
+**First Stage - Basic Structure:**
+- `^.{33}$` - Input must be exactly 33 characters long  
+- `(?:^[H][T][B]).*` - Must start with "HTB"
 - Contains specific character patterns separated by underscores
 
-Then it checks detailed patterns for each section:
-- Each part between the underscores has specific rules
-- Some parts must start with certain letters
-- Some must contain numbers in specific positions
-- Character types are strictly enforced (uppercase, lowercase, or digits)
+**Second Stage - Detailed Patterns:**
+- Each of the 7 segments has specific regex rules
+- Character type enforcement (uppercase, lowercase, digits)
+- Position-based constraints discovered at address `0x00326010`
 
-Finally, mathematical validation:
-- The program calculates the product of ASCII values for each section
-- Compares these products against pre-set target numbers
-- All sections must pass both pattern and math checks
-
+**Third Stage - Mathematical Validation:**
+- ASCII value multiplication for each segment
+- Comparison with hardcoded numerical targets
+- All segments must pass both pattern and math checks
 
 <img width="1892" height="202" alt="image" src="https://github.com/user-attachments/assets/fa705455-a7a5-4e2d-a3ed-7c51320ec862" />
 
@@ -65,34 +65,38 @@ Finally, mathematical validation:
 ### **Validation Mechanism Discovery**
 Command:
 ```bash
-objdump -t rega_town | grep -i "check\|valid"
+objdump -t rega_town | grep -i "check\|valid\|mul"
 ```
-What We Found:
-- Validation Function: check_input - Main validation routine
-- Mathematical Function: multiply_characters - Handles ASCII calculations
-- Multiple Checkpoints: Series of validation steps
-
-### **How Constraints Are Enforced**
-
-Sequential Validation Flow:
-- Length Check - Immediate rejection if not 33 characters
-- Format Check - Verifies HTB{} structure
-- Pattern Validation - Regex matching for each segment
+Located core validation functions: check_input and multiply_characters
+Sequential Enforcement:
+- Length Check - Immediate rejection for wrong size
+- Format Check - HTB{} structure validation
+- Pattern Validation - Regex matching per segment
 - Mathematical Verification - ASCII product calculations
 - Final Approval - All checks must pass
 
+Key Insight: The dual-constraint system makes brute-force impractical, requiring understanding of both structural and mathematical rules.
 
-Key Insight: The constraints work together to create a robust validation system where guessing becomes computationally infeasible without understanding both rule types.
+## Technical Discovery Details
 
+**Binary Analysis Commands:**
+```bash
+# Locate regex patterns
+r2 rega_town
+[0x00000000]> izz | grep -A10 "Welcome to our secret town"
+
+# Find validation functions  
+objdump -t rega_town | grep -E "check|multiply"
+```
 ---
 
-### 5. **Automated Solving Approach**
+### 5. Automated Solving Approach
 
-I developed a script that:
-- Generates potential character combinations
-- Validates against discovered patterns
-- Checks mathematical constraints
-- Filters valid segments
+**Script Logic:**
+1. Generate combinations using discovered regex constraints
+2. Calculate ASCII products for validation
+3. Filter results to meaningful English words
+4. Verify against original binary
 
 ---
 
