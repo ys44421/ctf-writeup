@@ -37,58 +37,41 @@ strings rega_town | grep -E "Welcome|Enter|Correct|Maybe" | head -5
 
 ---
 
-### 3. Pattern Discovery
+### 3. Pattern & Technical Discovery
 
-Using radare2 for binary analysis, I discovered the program implements multi-stage validation:
+**Binary Analysis Commands:**
+```bash
+# Locate regex patterns using radare2
+r2 rega_town
+[0x00000000]> aaa
+[0x00000000]> izz | grep -A10 "Welcome to our secret town"
 
-**First Stage - Basic Structure:**
-- `^.{33}$` - Input must be exactly 33 characters long  
-- `(?:^[H][T][B]).*` - Must start with "HTB"
+# Find validation functions using objdump
+objdump -t rega_town | grep -E "check|multiply"
+```
+
+
+
+Multi-Stage Validation Discovered:
+- ^.{33}$ - Input must be exactly 33 characters long
+- (?:^[H][T][B]).* - Must start with "HTB"
 - Contains specific character patterns separated by underscores
 
-**Second Stage - Detailed Patterns:**
+Second Stage - Detailed Patterns:
 - Each of the 7 segments has specific regex rules
 - Character type enforcement (uppercase, lowercase, digits)
-- Position-based constraints discovered at address `0x00326010`
+- Position-based constraints
 
-**Third Stage - Mathematical Validation:**
+Third Stage - Mathematical Validation:
 - ASCII value multiplication for each segment
 - Comparison with hardcoded numerical targets
 - All segments must pass both pattern and math checks
 
 <img width="1892" height="202" alt="image" src="https://github.com/user-attachments/assets/fa705455-a7a5-4e2d-a3ed-7c51320ec862" />
 
----
-
-### 4. **Constraint Analysis**
-
-### **Validation Mechanism Discovery**
-Command:
-```bash
-objdump -t rega_town | grep -i "check\|valid\|mul"
-```
-Located core validation functions: check_input and multiply_characters
-Sequential Enforcement:
-- Length Check - Immediate rejection for wrong size
-- Format Check - HTB{} structure validation
-- Pattern Validation - Regex matching per segment
-- Mathematical Verification - ASCII product calculations
-- Final Approval - All checks must pass
-
 Key Insight: The dual-constraint system makes brute-force impractical, requiring understanding of both structural and mathematical rules.
 
-## Technical Discovery Details
 
-**Binary Analysis Commands:**
-```bash
-# Locate regex patterns
-r2 rega_town
-[0x00000000]> izz | grep -A10 "Welcome to our secret town"
-
-# Find validation functions  
-objdump -t rega_town | grep -E "check|multiply"
-```
----
 
 ### 5. Automated Solving Approach
 
@@ -111,9 +94,10 @@ The key was combining:
 
 ### Tools & Techniques
 
-- Binary analysis utilities for pattern extraction
-- Custom scripting for constraint solving
-- Systematic validation of potential solutions
+- Radare2 - Deep binary analysis and pattern extraction
+- objdump/strings - Initial reconnaissance and function discovery
+- Python - Automated constraint solving and validation
+- Systematic Testing - Iterative verification approach
 
 ---
 
