@@ -86,18 +86,15 @@ strings checker.ko | head -n 40
 
 ## 6. Reproducing the module’s logic 
 
-- After inspecting the kernel module and extracting its `.rodata` section, it became clear that the verification routine in the module compared user input against values derived from static binary data.  
-Rather than running the kernel or guessing the password manually, it made sense to **recreate that same logic offline** - this keeps the analysis safer and easier to test.
+- After extracting `.rodata` and inspecting the module, I found that the module builds the expected value by combining two static byte blocks with a simple byte-wise operation (XOR) and then comparing the result to user input.  
 
-- I wrote a small Python script to read the extracted `rodata` file, process the binary data, and perform the same operation that the kernel module used internally.  
-The goal was to see if this transformation produced a readable string or pattern, which would confirm that the logic was correctly reversed.
 
-- While examining the disassembly, I noticed a repeating operation applied between two sets of values inside the `.rodata` region.  
-That suggested the program used a **simple byte-by-byte transformation** to generate the expected value.  
-By automating this operation in Python, I could test that theory quickly without needing to recompile or execute kernel code.
+- To confirm this safely, I implemented a small offline script that reads the extracted `rodata`, applies the same byte-wise operation to the two blocks, and prints the derived string. Reproducing the operation offline avoids touching the running kernel while verifying the logic.
 
+- The script produced a human-readable string that matches the module’s expected value, confirming the verification is based on static data and a reversible byte-wise transform (XOR). Decoding can therefore be done offline.
+
+- **Flag found**
 <img width="542" height="197" alt="image" src="https://github.com/user-attachments/assets/2f14a834-3ae7-4c96-abfe-e51347add059" />
 
-- Running the local analysis script on the extracted `.rodata` produced a readable string resembling a flag: `HTB{}`.  
-This confirms the kernel module’s verification is based on static data and that the reproduced transformation is correct. 
+
 
