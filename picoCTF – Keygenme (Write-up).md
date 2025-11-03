@@ -44,7 +44,7 @@ This screenshot shows the part of the Ghidra decompiler where those MD5 calls an
 
 ---
 
-## 4. Dynamic Analysis (GDB)
+## 3. Dynamic Analysis (GDB)
 
 - To confirm the exact position where the flag is validated, I ran the program under GDB.
 Using the memory map, I identified the base address 0x0000555555554000.
@@ -62,7 +62,7 @@ From Ghidra, I knew the check happened near offset 0x13C8, so I set a breakpoint
 
 ---
 
-## 5. Validation
+## 4. Validation
 - After confirming the logic, I piped my reconstructed key into the binary:
 ```
 printf 'picoCTF{br1ng_y0ur_0wn_k3y_XXXXXXXX}\n' | ./keygenme
@@ -72,7 +72,7 @@ printf 'picoCTF{br1ng_y0ur_0wn_k3y_XXXXXXXX}\n' | ./keygenme
 
 ---
 
-## 6. Reflection
+## 5. Reflection
 
 - This challenge demonstrated how static and dynamic analysis complement each other.
 Ghidra revealed the algorithm’s structure, while GDB confirmed its runtime behavior.
