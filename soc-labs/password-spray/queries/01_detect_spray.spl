@@ -1,0 +1,9 @@
+| inputlookup synthetic_windows_auth.csv
+| eval _time=strptime(TimeCreated,"%Y-%m-%dT%H:%M:%SZ"), EventCode=tonumber(EventCode), LogonType=tonumber(LogonType)
+| where EventCode=4625 AND LogonType=3
+| eval event_time=_time
+| bin _time span=5m
+| stats count AS failed_attempts dc(TargetUserName) AS affected_accounts values(TargetUserName) AS targeted_accounts min(event_time) AS first_failure max(event_time) AS last_failure BY _time SourceIp Computer TargetDomainName
+| where failed_attempts>=12 AND affected_accounts>=6
+| eval bucket_start_utc=strftime(_time,"%Y-%m-%dT%H:%M:%SZ"), first_failure_utc=strftime(first_failure,"%Y-%m-%dT%H:%M:%SZ"), last_failure_utc=strftime(last_failure,"%Y-%m-%dT%H:%M:%SZ")
+| table bucket_start_utc SourceIp Computer TargetDomainName failed_attempts affected_accounts targeted_accounts first_failure_utc last_failure_utc

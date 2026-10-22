@@ -1,0 +1,10 @@
+| inputlookup synthetic_windows_auth.csv
+| eval _time=strptime(TimeCreated,"%Y-%m-%dT%H:%M:%SZ"), EventCode=tonumber(EventCode), LogonType=tonumber(LogonType), EventRecordID=tonumber(EventRecordID)
+| where (EventCode=4625 OR EventCode=4624) AND LogonType=3
+| sort 0 _time EventRecordID
+| eval failure_time=if(EventCode=4625,_time,null()), failure_id=if(EventCode=4625,EventRecordID,null())
+| streamstats current=f last(failure_time) AS prior_failure_time last(failure_id) AS prior_failure_id BY SourceIp Computer TargetDomainName TargetUserName
+| eval seconds_since_failure=_time-prior_failure_time
+| where EventCode=4624 AND seconds_since_failure>0 AND seconds_since_failure<=600
+| eval success_time_utc=strftime(_time,"%Y-%m-%dT%H:%M:%SZ")
+| table success_time_utc SourceIp Computer TargetDomainName TargetUserName EventRecordID prior_failure_id seconds_since_failure

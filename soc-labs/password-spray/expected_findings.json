@@ -1,0 +1,57 @@
+{
+  "total_input_events": 23,
+  "events_analyzed": 23,
+  "alert_count": 1,
+  "alerts": [
+    {
+      "bucket_start_utc": "2026-10-20T06:00:00Z",
+      "source_ip": "10.20.30.45",
+      "computer": "FS-LAB-01",
+      "domain": "LAB",
+      "failed_attempts": 16,
+      "affected_accounts": 8,
+      "targeted_accounts": [
+        "alice",
+        "ben",
+        "carla",
+        "dan",
+        "emma",
+        "faisal",
+        "grace",
+        "hugo"
+      ],
+      "first_failure_utc": "2026-10-20T06:01:00Z",
+      "last_failure_utc": "2026-10-20T06:02:15Z",
+      "failure_record_ids": [
+        10004,
+        10005,
+        10006,
+        10007,
+        10008,
+        10009,
+        10010,
+        10011,
+        10012,
+        10013,
+        10014,
+        10015,
+        10016,
+        10017,
+        10018,
+        10019
+      ]
+    }
+  ],
+  "correlated_successes": [
+    {
+      "source_ip": "10.20.30.45",
+      "computer": "FS-LAB-01",
+      "domain": "LAB",
+      "user": "alice",
+      "success_time_utc": "2026-10-20T06:03:00Z",
+      "success_record_id": 10020,
+      "previous_failure_record_id": 10012,
+      "seconds_since_previous_failure": 80
+    }
+  ]
+}
